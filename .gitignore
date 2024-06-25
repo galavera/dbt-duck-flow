@@ -1,0 +1,61 @@
+# Ignore editor and IDE files
+.vscode/
+.idea/
+.pytest_cache/
+csv/
+__pycache__/
+
+# .py files to ignore
+test_*.py
+*_test.py
+test.py
+
+# Ignore compiled output
+*.class
+*.o
+*.pyc
+
+# Ignore dependencies
+node_modules/
+vendor/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Ignore build artifacts
+build/
+dist/
+
+# Ignore database files
+*.db
+*.sqlite
+
+# Ignore package lock files
+package-lock.json
+yarn.lock
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+
+# Ignore user-specific files
+*.bak
+*.swp
+*.swo
+
+# Ignore sensitive or private information
+secrets.yml
+credentials.json
+
+# Ignore generated documentation
+docs/
+
+# Ignore cache and temporary files
+.cache/
+.tmp/

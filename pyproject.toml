@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "dbt-duckdb"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+duckdb = "^1.0.0"
+pandas = "^2.2.2"
+pyarrow = "^16.1.0"
+fire = "^0.6.0"
+loguru = "^0.7.2"
+pydantic = "^2.7.4"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+Sphinx = "^7.3.7"
+pytest = "^8.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
