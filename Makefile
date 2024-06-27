@@ -1,11 +1,11 @@
+.PHONY: snow-ingest format
 
-.PHONY: snowflake-ingest format
-
-snowflake-ingest:
-	poetry run python -m ingestion.pipeline
+snow-ingest:
+	@echo "Running Snowflake ingestion..."
+	@poetry run python -m ingestion.pipeline
 
 format:
-	black .
+	ruff format .
 
 test:
 	pytest tests
