@@ -1,27 +1,41 @@
 from ingestion.snowflake_query import (
-    query_to_df,
-    get_snowflake_client,
-    build_snowflake_query,
-    csv_to_snowflake,
+    get_redfin_data1,
+    external_table_query,
+    get_snowflake_client
 )
-from ingestion.models import FredParameters
-from dotenv import load_dotenv
-from pathlib import Path
-import os
+from ingestion.duck import (
+    load_aws_secrets, 
+    write_to_s3, 
+    create_table_from_dataframe
+    )
+from ingestion.models import JobParameters, duckdb_table
+import duckdb
+#from typing import Any
+from loguru import logger
+import fire
+import sys
 
-# set environment variables
-path = Path("/root/env/.env")
-load_dotenv(dotenv_path=path)
-link = os.getenv("REDFIN_LINK")
+logger.remove()  # Remove all other handlers
+logger.add(sys.stdout, format="{time} {level} {message}", level="INFO")
+logger.add("debug_logs.log", rotation="100 MB", retention="10 days", level="DEBUG", format="{time} {level} {message}")
 
+def main(params: JobParameters):
+    # Download dataset
+    df = get_redfin_data1(params)
 
-def main(params: FredParameters):
-    df = query_to_df(build_snowflake_query(params), get_snowflake_client())
-    # Upload Redfin csv data to stage
-    csv_to_snowflake(get_snowflake_client(connection="myconnection2"), link)
-    return df
+    # DuckDB creates table and uploads to s3 as parquet
+    conn = duckdb.connect(database=':memory:', read_only=False)
+    conn.register('df', df)
+
+    load_aws_secrets(conn)
+    create_table_from_dataframe(conn, df, params)
+    write_to_s3(conn, params)
+
+    # Setup s3 as external table in snowflake
+#    get_snowflake_client(connection="myconnection2").sql(
+#        external_table_query(params)
+#    )
 
 
 if __name__ == "__main__":
-    df = main(params=FredParameters())
-    df.show()
+    fire.Fire(lambda **kwargs: main(JobParameters(**kwargs)))

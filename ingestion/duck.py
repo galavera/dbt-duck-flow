@@ -1,36 +1,24 @@
-
 from loguru import logger
+from ingestion.models import JobParameters
 
 
-def create_table_from_dataframe(duckdb_con, table_name: str, table_db: str, df):
-    logger.info(f"Creating table {table_name} in local DuckDB")
-    duckdb_con.sql(table_db)
-    logger.info("inserting data into table")
-    duckdb_con.sql(
-        f"""
-        INSERT INTO {table_name} 
-            SELECT *
-            FROM {df};
-        """
-    )
+def create_table_from_dataframe(duckdb_con, df, params: JobParameters):
+    dataframe = df
+    logger.info(f"Creating table {params.table_name} from dataframe")
+    duckdb_con.execute(f"create table {params.table_name} as select * from dataframe;")
 
 
 def load_aws_secrets(duckdb_conn):
-    """Load AWS Credentials into DuckDB from .aws/credentials file"""
-    if duckdb_conn.sql("CREATE SECRET secret2 (TYPE S3, PROVIDER CREDENTIAL_CHAIN);"):
-        logger.info("Credentials loaded successfully")
-    else:
-        logger.error("Failed to load credentials")
+    logger.info("loading AWS credentials")
+    duckdb_conn.sql("CALL load_aws_credentials();")
 
 
-def write_to_s3(
-        duckdb_conn, table: str, s3_bucket: str
-        ):
+def write_to_s3(duckdb_conn, params: JobParameters):
     """Write data to S3 bucket as parquet file"""
-    logger.info(f"Writing data to s3 {s3_bucket}/{table}")
-    duckdb_conn.sql(
+    logger.info(f"Writing data to s3 {params.s3_path}/{params.table_name}.parquet")
+    duckdb_conn.execute(
         f"""
-        COPY {table} TO 's3://{s3_bucket}/{table}.parquet'
+        COPY {params.table_name} TO '{params.s3_path}/{params.table_name}.parquet'
         (FORMAT PARQUET, OVERWRITE_OR_IGNORE true, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 1000000);
         """
     )
