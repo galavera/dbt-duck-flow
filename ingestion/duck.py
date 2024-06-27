@@ -2,13 +2,27 @@ from loguru import logger
 from ingestion.models import JobParameters
 
 
-def create_table_from_dataframe(duckdb_con, df, params: JobParameters):
+def create_table_from_dataframe(duckdb_con, df, table, params: JobParameters):
     dataframe = df
-    logger.info(f"Creating table {params.table_name} from dataframe")
-    duckdb_con.execute(f"create table {params.table_name} as select * from dataframe;")
+    try:
+        logger.info(f"Creating table '{params.table_name}'")
+        duckdb_con.execute(
+            f"{table}"
+            f"INSERT OR REPLACE INTO {params.table_name} SELECT * FROM dataframe"
+            )
+            
+        #duckdb_con.execute()
+        #duckdb_con.execute(f"create table {params.table_name} as select * from dataframe;")
+    except Exception as e:
+        logger.error(f"Error creating table {params.table_name}: {e}")
 
 
 def load_aws_secrets(duckdb_conn):
+    """
+    This loads AWS credentials from ~/.aws folder into your DuckDB connection.
+    
+    Note: You can also set them as environment variables.
+    """
     logger.info("loading AWS credentials")
     duckdb_conn.sql("CALL load_aws_credentials();")
 

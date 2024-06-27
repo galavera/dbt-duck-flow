@@ -9,6 +9,7 @@ __pycache__/
 test_*.py
 *_test.py
 test.py
+ingestion/tests/
 
 # Ignore compiled output
 *.class

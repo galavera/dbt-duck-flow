@@ -20,6 +20,7 @@ class JobParameters(BaseModel):
 def duckdb_table(params: JobParameters):
     return f"""
     CREATE TABLE IF NOT EXISTS {params.table_name} (
+        id INTEGER PRIMARY KEY,
         period_begin DATE,
         period_end DATE,
         region_type VARCHAR,
