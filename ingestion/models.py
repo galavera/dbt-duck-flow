@@ -1,11 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Annotated, Union
-from dotenv import load_dotenv
 import os
-from pathlib import Path
-
-path = Path('/root/env/.env')
-load_dotenv(dotenv_path=path)
 
 
 class JobParameters(BaseModel):

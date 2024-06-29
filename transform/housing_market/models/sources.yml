@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: external_source
+    type: s3
+    meta:
+      external_location: "{{ env_var('S3_PATH') }}"
+    tables:
+      - name: redfin_data

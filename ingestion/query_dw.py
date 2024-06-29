@@ -95,15 +95,18 @@ def get_redfin_data1(params: JobParameters) -> pd.DataFrame:
                 pbar.update(len(chunk))
                 count += 1
                 
-                #if count == 100:
+                #if count == 100: # For testing purposes
                     #break
 
             # Decode the entire binary data at once
             decoded_data = binary_data.decode('utf-8')
             df = pd.read_csv(StringIO(decoded_data), sep='\t', encoding='utf-8', index_col=False)
+            df = df.sort_values(['region_type', 'region_name', 'period_begin'])
             df.reset_index(inplace=True)
             df.index = df.index + 1
             df.index.name = 'id'
+            df.drop(columns=['index'], inplace=True)
+            df.reset_index(inplace=True)
             return df
     except Exception as e:
         logger.error(f"Failed to get Redfin data: {e}")

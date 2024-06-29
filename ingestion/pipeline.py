@@ -1,7 +1,5 @@
-from ingestion.snowflake_query import (
-    get_redfin_data1,
-    external_table_query,
-    get_snowflake_client
+from ingestion.query_dw import (
+    get_redfin_data1
 )
 from ingestion.duck import (
     load_aws_secrets, 

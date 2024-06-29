@@ -29,10 +29,12 @@ def load_aws_secrets(duckdb_conn):
 
 def write_to_s3(duckdb_conn, params: JobParameters):
     """Write data to S3 bucket as parquet file"""
-    logger.info(f"Writing data to s3 {params.s3_path}/{params.table_name}.parquet")
+    logger.info(f"Writing data to {params.s3_path}")
+    duckdb_conn.execute("SET threads = 4;")
     duckdb_conn.execute(
         f"""
-        COPY {params.table_name} TO '{params.s3_path}/{params.table_name}.parquet'
-        (FORMAT PARQUET, OVERWRITE_OR_IGNORE true, COMPRESSION 'ZSTD', ROW_GROUP_SIZE 1000000);
+        COPY {params.table_name} TO '{params.s3_path}/{params.table_name}'
+        (FORMAT PARQUET, PARTITION_BY (duration), OVERWRITE_OR_IGNORE true, 
+        COMPRESSION 'ZSTD', ROW_GROUP_SIZE 1000000, FILENAME_PATTERN "redfin");
         """
     )

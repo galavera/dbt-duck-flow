@@ -1,0 +1,6 @@
+
+version: 2
+
+models:
+  - name: weekly_stats
+    description: "Rolling weekly statistics for the housing market"
