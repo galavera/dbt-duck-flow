@@ -1795,6 +1795,27 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "pygments
 testing = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "importlib-metadata", "ini2toml[lite] (>=0.14)", "jaraco.develop (>=7.21)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "jaraco.test", "mypy (==1.10.0)", "packaging (>=23.2)", "pip (>=19.1)", "pyproject-hooks (!=1.1)", "pytest (>=6,!=8.1.1)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-home (>=0.5)", "pytest-mypy", "pytest-perf", "pytest-ruff (>=0.3.2)", "pytest-subprocess", "pytest-timeout", "pytest-xdist (>=3)", "tomli", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
+name = "shandy-sqlfmt"
+version = "0.21.3"
+description = "sqlfmt formats your dbt SQL files so you don't have to."
+optional = false
+python-versions = "<4.0,>=3.8"
+files = [
+    {file = "shandy_sqlfmt-0.21.3-py3-none-any.whl", hash = "sha256:81bfe02c07060fb17fd0b2fa5a595f5f5096e13ba0fff8cd0c0d2ff4ee6d79d0"},
+    {file = "shandy_sqlfmt-0.21.3.tar.gz", hash = "sha256:500a88a133585432aecf7761964213b9b756abfd6f33f5d53e052d2e1d0584da"},
+]
+
+[package.dependencies]
+click = ">=8.0,<9.0"
+jinja2 = ">=3.0,<4.0"
+platformdirs = ">=2.4,<5.0"
+tqdm = ">=4.0,<5.0"
+
+[package.extras]
+jinjafmt = ["black"]
+sqlfmt-primer = ["gitpython (>=3.1.24,<4.0.0)"]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -2058,4 +2079,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "b5d23cab12aff6ca10035075870b8fe4c84a630ebbf7bb7e387ee665ba53377d"
+content-hash = "915369f8fced20289b3a9743f9730077f19f06a28e3a11fac6285af2970c1b59"

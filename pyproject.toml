@@ -19,9 +19,13 @@ tqdm = "^4.66.4"
 dbt-duckdb = "^1.8.1"
 snowflake-snowpark-python = "^1.19.0"
 
+
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
 ruff = "^0.4.10"
+
+[tool.sqlfmt]
+exclude=["target/**/*", "dbt_packages/**/*"]
 
 [build-system]
 requires = ["poetry-core"]

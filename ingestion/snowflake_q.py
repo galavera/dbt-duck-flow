@@ -2,11 +2,9 @@
 from snowflake.snowpark import Session, DataFrameWriter
 from ingestion.models import JobParameters
 import pandas as pd
-import requests
 import time
-from io import StringIO
 from loguru import logger
-from tqdm import tqdm
+
 
 
 def get_snowflake_client(params: JobParameters) -> Session:
@@ -78,41 +76,3 @@ def s3_to_snowflake(session: Session, df):
         raise
     finally:
         session.close()
-
-def get_redfin_data1(params: JobParameters) -> pd.DataFrame:
-    """Get Redfin data"""
-    try:
-        response = requests.get(params.redfin_data, stream=True)
-        response.raise_for_status()  # Check that the request was successful
-        total_size = int(response.headers.get('content-length', 0))
-
-        with tqdm(total=total_size, desc="Downloading Redfin Data", unit='MB', unit_scale=True, ncols=80,
-                  bar_format='{desc}: {percentage:3.0f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]') as pbar:
-            binary_data = bytearray()
-            count = 0
-            for chunk in response.iter_content(chunk_size=4096):
-                binary_data.extend(chunk)
-                pbar.update(len(chunk))
-                count += 1
-                
-                #if count == 100: # For testing purposes
-                    #break
-
-            # Decode the entire binary data at once
-            decoded_data = binary_data.decode('utf-8')
-            df = pd.read_csv(StringIO(decoded_data), sep='\t', encoding='utf-8', index_col=False)
-            df = df.sort_values(['region_type', 'region_name', 'period_begin'])
-            df.reset_index(inplace=True)
-            df.index = df.index + 1
-            df.index.name = 'id'
-            df.drop(columns=['index'], inplace=True)
-            df.reset_index(inplace=True)
-            return df
-    except Exception as e:
-        logger.error(f"Failed to get Redfin data: {e}")
-        raise
-
-def fin_data_source(params: JobParameters):
-    # Add a new source to the pipeline from the snowflake marketplace
-    df = query_to_df(build_snowflake_query(params), get_snowflake_client())
-    return df

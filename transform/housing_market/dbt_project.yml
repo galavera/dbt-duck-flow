@@ -4,6 +4,7 @@
 # name or the intended use of these models
 name: 'housing_market'
 version: '1.0.0'
+config-version: 2
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'housing_market'
@@ -20,19 +21,29 @@ snapshot-paths: ["snapshots"]
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
-  - "dbt_packages"
 
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
+# on-run-start, see: https://github.com/duckdb/dbt-duckdb#reading-and-writing-external-files
+# on-run-start:
+#  - "{{ register_upstream_external_models() }}"
 
 # In this example config, we tell dbt to build all models in the example/
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
   housing_market:
-    schema_model:
-      +materialized: table
-      +pre-hook: CALL load_aws_credentials()
-    example:
-      +materialized: view
+    staging:
+      raw_data:
+        +materialized: table
+        +pre-hook: CALL load_aws_credentials()
+        +post-hook:
+          - "{{ export_data(this.name) }}"
+          - "{{ local_export(this.name, '~/VSCode/duckdb-dbt/transform/housing_market/local_storage') }}"
+      processed_data:
+        +materialized: table
+        +pre-hook: CALL load_aws_credentials()
+        +post-hook: 
+          - "{{ export_data(this.name) }}"
+          - "{{ local_export(this.name, '~/VSCode/duckdb-dbt/transform/housing_market/local_storage') }}"

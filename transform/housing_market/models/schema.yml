@@ -1,6 +1,7 @@
-
 version: 2
 
 models:
-  - name: weekly_stats
-    description: "Rolling weekly statistics for the housing market"
+  - name: raw_data
+    description: "Weekly statistics for the housing market"
+  - name: processed_data
+    description: "Processed data for the housing market"

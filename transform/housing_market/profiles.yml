@@ -2,12 +2,20 @@ housing_market:
   outputs:
     dev:
       type: duckdb
-      path: dev.duckdb
+      path: dev.db
       threads: 2
 
     prod:
-      type: duckdb
-      path: prod.duckdb
-      threads: 4
+      type: snowflake
+      account: 'snowflake_path_here'
+      keyfile: 'path_to_config_file'
+
+      user: galavera
+      password: ####
+
+      database:
+      schema:
+      threads: 2
+      client_session_keep_alive: False
 
   target: dev
