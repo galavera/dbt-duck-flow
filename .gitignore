@@ -61,3 +61,6 @@ docs/
 # Ignore cache and temporary files
 .cache/
 .tmp/
+example_models/my_first_dbt_model.sql
+example_models/my_second_dbt_model.sql
+example_models/notes.sql
