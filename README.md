@@ -70,7 +70,12 @@ I have provided the parquet files generated from running the dbt models in the R
 
 ## Usage
 
-1. **Ingest Data:**
+1. **Set Environment Variables:**
+
+    Rename the `template.env` to `.env` in the root directory and add your environment variables.
+
+
+2. **Ingest Data:**
 
     Use the provided Python scripts in the `ingestion` folder to ingest and export data.  
 
@@ -87,6 +92,9 @@ I have provided the parquet files generated from running the dbt models in the R
     ```sh
     make rf-transform
     ```
+    **example:**
+    ![example](https://imgur.com/NeBCwdO.png)
+    
 
 ## Project Structure
 

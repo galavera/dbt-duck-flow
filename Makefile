@@ -1,7 +1,7 @@
 include ~/.env
 export
 
-.PHONY: rf-ingest format
+.PHONY: rf-ingest rf-transform format
 
 DBT_FOLDER = transform/housing_market
 DBT_TARGET = dev
