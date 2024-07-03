@@ -41,6 +41,7 @@ dist/
 # Ignore package lock files
 package-lock.json
 yarn.lock
+package.json
 
 # Ignore operating system files
 .DS_Store
@@ -54,6 +55,7 @@ Thumbs.db
 # Ignore sensitive or private information
 secrets.yml
 credentials.json
+
 
 # Ignore generated documentation
 docs/

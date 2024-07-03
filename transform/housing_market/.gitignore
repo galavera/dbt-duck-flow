@@ -2,3 +2,6 @@
 target/
 dbt_packages/
 logs/
+.user.yml
+local_storage/*.parquet
+local_storage/*.csv
