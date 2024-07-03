@@ -25,7 +25,8 @@
 				"GitHub.copilot",
 				"GitHub.copilot-chat",
 				"ms-python.python",
-				"albert.TabOut"
+				"innoverio.vscode-dbt-power-user",
+        "yassun7010.vscode-shandy-sqlfmt"
 			]
 		}
 	}
