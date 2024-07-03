@@ -11,6 +11,9 @@ This project is designed to be a template for building data pipelines that can b
 
 The project uses the [Redfin Weekly Housing Market Dataset](https://www.redfin.com/news/data-center/) for demonstration purposes. The dataset contains information about housing markets in the United States, including property details, location, and pricing information. Redfin release a new up-to-date dataset each week (typically Thursdays). The data is available in CSV format and can be downloaded from the Redfin website.
 
+## Release Content
+I have provided the parquet files generated from running the dbt models in the Releases section. You can download the parquet files and use them locally or in your data warehouse or data lake.
+
 ## Features
 
 - **Data Ingestion:** Efficient data ingestion and manipulation using `pandas` and `duckdb`. Uses pydantic models with pytest alongside pyarrow for data type inference and schema validation.
