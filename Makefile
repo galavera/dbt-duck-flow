@@ -11,9 +11,13 @@ rf-ingest:
 	@poetry run python -m ingestion.pipeline
 
 rf-transform:
-	cd $$DBT_FOLDER && \
-	dbt run \
-		--$$DBT_TARGET \	
+	if [ -z "$(DBT_MODEL)" ]; then \
+		echo "No model specified, running all models."; \
+		cd $$DBT_FOLDER && dbt run --target $$DBT_TARGET; \
+	else \
+			echo "Running model: $(DBT_MODEL)"; \
+			cd $$DBT_FOLDER && dbt run --target $$DBT_TARGET --select $(DBT_MODEL); \
+	fi
 
 format:
 	ruff format .
