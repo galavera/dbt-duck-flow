@@ -4,5 +4,9 @@
 *.sql linguist-language=sql
 *.sql text
 
+.ipynb linguist-detectable=true
+.ipynb linguist-language=Jupyter Notebook
+.ipynb text
+
 Makefile linguist-documentation=true
 .devcontainer/* linguist-documentation=true
