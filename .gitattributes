@@ -6,5 +6,6 @@
 
 *.ipynb linguist-documentation=true
 
+
 Makefile linguist-documentation=true
 .devcontainer/* linguist-documentation=true
