@@ -1,0 +1,20 @@
+housing_market:
+  outputs:
+    dev:
+      type: duckdb
+      path: dev.db
+      threads: 2
+
+    analytics:
+      type: snowflake
+      account: 
+      user: 
+
+      password: 
+
+      database: housing_market_dw
+      schema: analytics
+      threads: 4
+      client_session_keep_alive: False
+
+  target: analytics
