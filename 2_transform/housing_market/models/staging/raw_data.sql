@@ -2,13 +2,13 @@
 with
     raw_data as (
         select *
-        from {{ source('external_source', 'redfin_data') }}
+        from {{ source('external_source', 's3') }}
         order by region_type desc, region_name, period_begin
     ),
     -- Adjusting the duration column to be an integer and renaming it to
-    -- rolling_window_weeks
+    -- duration_in_weeks
     step_1 as (
-        select *, replace(duration, ' weeks', '')::int as rolling_window_weeks
+        select *, replace(duration, ' weeks', '')::int as duration_in_weeks
         from raw_data
     ),
     -- Adding a new id column to the dataset
@@ -18,7 +18,7 @@ select
     new_id as id,
     period_begin,
     period_end,
-    rolling_window_weeks,
+    duration_in_weeks,
     region_type,
     region_name,
     region_id,

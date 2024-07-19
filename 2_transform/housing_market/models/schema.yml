@@ -5,3 +5,5 @@ models:
     description: "Weekly statistics for the housing market"
   - name: processed_data
     description: "Processed data for the housing market"
+  - name: f_housing_market
+    description: "Housing Market fact table"

@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
-from ingestion.models import JobParameters
-from ingestion.snowflake_q import (
+from .models import JobParameters
+from .snowflake_q import (
     query_to_df, get_snowflake_client, 
     build_snowflake_query
     )

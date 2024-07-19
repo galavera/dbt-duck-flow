@@ -4,7 +4,7 @@ with
             id,
             period_begin,
             period_end,
-            rolling_window_weeks,
+            duration_in_weeks,
             region_type,
             region_name as region,
             region_id,
@@ -48,11 +48,11 @@ select
         else null
     end as region_type_id,
     case
-        when rd.rolling_window_weeks = 1
+        when rd.duration_in_weeks = 1
         then 1
-        when rd.rolling_window_weeks = 4
+        when rd.duration_in_weeks = 4
         then 2
-        when rd.rolling_window_weeks = 12
+        when rd.duration_in_weeks = 12
         then 3
         else null
     end as weeks_id

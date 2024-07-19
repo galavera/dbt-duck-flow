@@ -1,5 +1,5 @@
 from loguru import logger
-from ingestion.models import JobParameters
+from .models import JobParameters
 
 
 def create_table_from_dataframe(duckdb_con, df, table, params: JobParameters):
@@ -10,9 +10,6 @@ def create_table_from_dataframe(duckdb_con, df, table, params: JobParameters):
             f"{table}"
             f"INSERT OR REPLACE INTO {params.table_name} SELECT * FROM dataframe"
             )
-            
-        #duckdb_con.execute()
-        #duckdb_con.execute(f"create table {params.table_name} as select * from dataframe;")
     except Exception as e:
         logger.error(f"Error creating table {params.table_name}: {e}")
 

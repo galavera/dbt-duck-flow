@@ -1,12 +1,12 @@
-from ingestion.dataset import (
+from .dataset import (
     get_redfin_data
 )
-from ingestion.duck import (
+from .duck import (
     load_aws_secrets, 
     write_to_s3, 
     create_table_from_dataframe
     )
-from ingestion.models import JobParameters, duckdb_table
+from .models import JobParameters, duckdb_table
 import duckdb
 from loguru import logger
 import fire

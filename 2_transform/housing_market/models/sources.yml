@@ -5,4 +5,5 @@ sources:
     meta:
       external_location: 's3://dataspec/preprocessed/*/*/*.parquet'
     tables:
-      - name: redfin_data
+      - name: s3
+      

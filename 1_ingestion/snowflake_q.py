@@ -1,6 +1,6 @@
 # setup connection to snowflake using snowpark API
 from snowflake.snowpark import Session, DataFrameWriter
-from ingestion.models import JobParameters
+from .models import JobParameters
 import pandas as pd
 import time
 from loguru import logger

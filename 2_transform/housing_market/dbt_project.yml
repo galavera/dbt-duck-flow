@@ -35,15 +35,21 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   housing_market:
     staging:
+      +tags:
+        - "staging"
       raw_data:
         +materialized: table
-        +pre-hook: CALL load_aws_credentials()
-        +post-hook:
-          - "{{ export_data(this.name) }}"
-          - "{{ local_export(this.name, '~/VSCode/duckdb-dbt/transform/housing_market/local_storage') }}"
+        +pre-hook: "{% if target.name == 'dev' %}CALL load_aws_credentials(){% endif %}"
       processed_data:
         +materialized: table
-        +pre-hook: CALL load_aws_credentials()
-        +post-hook: 
-          - "{{ export_data(this.name) }}"
-          - "{{ local_export(this.name, '~/VSCode/duckdb-dbt/transform/housing_market/local_storage') }}"
+        +pre-hook:
+          - "{% if target.name == 'dev' %}CALL load_aws_credentials(){% endif %}"
+        +post-hook:
+          - "{% if target.name == 'dev' %}{{ export_data(this.name) }}{% endif %}"
+    schema:
+      +tags: 
+        - "schema"
+      f_housing_market:
+        +materialized: table
+      dim_region:
+        +materialized: table
