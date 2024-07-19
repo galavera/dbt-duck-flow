@@ -55,6 +55,7 @@ Thumbs.db
 # Ignore sensitive or private information
 secrets.yml
 credentials.json
+2_transform/housing_market/profiles.yml
 
 
 # Ignore generated documentation
