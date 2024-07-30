@@ -12,7 +12,7 @@ models:
       - name: period_end
       - name: duration_in_weeks
       - name: region_type
-          tests:
+        tests:
           - accepted_values:
               values:
                 - county
