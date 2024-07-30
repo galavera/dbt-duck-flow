@@ -1,15 +1,15 @@
--- @block Load data from s3 bucket (see source.yml)
+-- @block Load data from s3 bucket (see sources.yml)
 with
-    raw_data as (
+    source as (
         select *
-        from {{ source('external_source', 's3') }}
+        from {{ source('external_source', 'raw_data') }}
         order by region_type desc, region_name, period_begin
     ),
     -- Adjusting the duration column to be an integer and renaming it to
     -- duration_in_weeks
     step_1 as (
         select *, replace(duration, ' weeks', '')::int as duration_in_weeks
-        from raw_data
+        from source
     ),
     -- Adding a new id column to the dataset
     step_2 as (select *, row_number() over () + 1000000 as new_id from step_1)

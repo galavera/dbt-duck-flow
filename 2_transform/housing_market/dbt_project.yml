@@ -21,7 +21,7 @@ snapshot-paths: ["snapshots"]
 
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
-
+  - "dbt_packages"
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -34,22 +34,21 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   housing_market:
+    +materialized: table
     staging:
       +tags:
         - "staging"
-      raw_data:
-        +materialized: table
+      stg_housing_market__raw:
         +pre-hook: "{% if target.name == 'dev' %}CALL load_aws_credentials(){% endif %}"
-      processed_data:
-        +materialized: table
+      stg_housing_market__pro:
         +pre-hook:
           - "{% if target.name == 'dev' %}CALL load_aws_credentials(){% endif %}"
         +post-hook:
           - "{% if target.name == 'dev' %}{{ export_data(this.name) }}{% endif %}"
-    schema:
-      +tags: 
-        - "schema"
+    marts:
+      +tags:
+        - "marts"
       f_housing_market:
-        +materialized: table
-      dim_region:
-        +materialized: table
+
+      d_region:
+

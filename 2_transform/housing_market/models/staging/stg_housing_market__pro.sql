@@ -1,5 +1,5 @@
 with
-    remove_yoy_data as (
+    source as (
         select
             id,
             period_begin,
@@ -24,37 +24,37 @@ with
             median_pending_sqft,
             average_sale_to_list_ratio,
             median_sale_ppsf
-        from {{ ref('raw_data') }}
+        from {{ ref('stg_housing_market__raw') }}
     ),
     states_data as (
         select *, dense_rank() over (order by state) as state_id
         from
             (
                 select *, regexp_extract(region, '([A-Z]{2})') as state
-                from remove_yoy_data
+                from source
                 where region not in ('All Redfin Metros')
             ) as extraction
         order by region_type desc, region, period_begin
     )
 select
-    rd.*,
+    s.*,
     sd.state,
     sd.state_id,
     case
-        when rd.region_type = 'metro'
+        when s.region_type = 'metro'
         then 1
-        when rd.region_type = 'county'
+        when s.region_type = 'county'
         then 2
         else null
     end as region_type_id,
     case
-        when rd.duration_in_weeks = 1
+        when s.duration_in_weeks = 1
         then 1
-        when rd.duration_in_weeks = 4
+        when s.duration_in_weeks = 4
         then 2
-        when rd.duration_in_weeks = 12
+        when s.duration_in_weeks = 12
         then 3
         else null
     end as weeks_id
-from remove_yoy_data rd
-left join states_data sd on rd.id = sd.id
+from source s
+left join states_data sd on s.id = sd.id

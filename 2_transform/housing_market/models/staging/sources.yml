@@ -5,5 +5,6 @@ sources:
     meta:
       external_location: 's3://dataspec/preprocessed/*/*/*.parquet'
     tables:
-      - name: s3
-      
+      - name: raw_data
+  - name: external_stage
+

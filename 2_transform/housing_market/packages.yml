@@ -1,3 +1,6 @@
 packages:
   - git: "https://github.com/EqualExperts/dbt-unit-testing"
     revision: v0.4.12
+
+  - package: dbt-labs/codegen
+    version: 0.12.1

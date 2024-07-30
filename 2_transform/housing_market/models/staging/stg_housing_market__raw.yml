@@ -1,0 +1,91 @@
+version: 2
+
+models:
+  - name: stg_housing_market__raw
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+
+      - name: period_begin
+
+      - name: period_end
+
+      - name: duration_in_weeks
+
+      - name: region_type
+        tests:
+          - accepted_values:
+              values:
+                - county
+                - metro
+
+      - name: region_name
+        description: "Location of metro or county"
+
+      - name: region_id
+
+      - name: adjusted_average_new_listings
+
+      - name: adjusted_average_new_listings_yoy
+
+      - name: average_pending_sales_listing_updates
+
+      - name: average_pending_sales_listing_updates_yoy
+
+      - name: off_market_in_two_weeks
+
+      - name: off_market_in_two_weeks_yoy
+
+      - name: adjusted_average_homes_sold
+
+      - name: adjusted_average_homes_sold_yoy
+
+      - name: median_new_listing_price
+
+      - name: median_new_listing_price_yoy
+
+      - name: median_sale_price
+
+      - name: median_sale_price_yoy
+
+      - name: median_days_to_close
+
+      - name: median_days_to_close_yoy
+
+      - name: median_new_listing_ppsf
+
+      - name: median_new_listing_ppsf_yoy
+
+      - name: active_listings
+
+      - name: active_listings_yoy
+
+      - name: median_days_on_market
+
+      - name: median_days_on_market_yoy
+
+      - name: percent_active_listings_with_price_drops
+
+      - name: percent_active_listings_with_price_drops_yoy
+
+      - name: age_of_inventory
+
+      - name: age_of_inventory_yoy
+
+      - name: months_of_supply
+
+      - name: months_of_supply_yoy
+
+      - name: median_pending_sqft
+
+      - name: median_pending_sqft_yoy
+
+      - name: average_sale_to_list_ratio
+
+      - name: average_sale_to_list_ratio_yoy
+
+      - name: median_sale_ppsf
+
+      - name: median_sale_ppsf_yoy

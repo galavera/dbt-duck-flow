@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: stg_housing_market__pro
+    description: "Added state and state_id columns"
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+      - name: period_begin
+      - name: period_end
+      - name: duration_in_weeks
+      - name: region_type
+          tests:
+          - accepted_values:
+              values:
+                - county
+                - metro
+      - name: region
+      - name: region_id
+      - name: adjusted_average_new_listings
+      - name: average_pending_sales_listing_updates
+      - name: off_market_in_two_weeks
+      - name: adjusted_average_homes_sold
+      - name: median_new_listing_price
+      - name: median_sale_price
+      - name: median_days_to_close
+      - name: median_new_listing_ppsf
+      - name: active_listings
+      - name: median_days_on_market
+      - name: percent_active_listings_with_price_drops
+      - name: age_of_inventory
+      - name: months_of_supply
+      - name: median_pending_sqft
+      - name: average_sale_to_list_ratio
+      - name: median_sale_ppsf
+      - name: state
+      - name: state_id
+      - name: region_type_id
+      - name: weeks_id
