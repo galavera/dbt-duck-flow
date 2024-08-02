@@ -1,6 +1,10 @@
-
+{{
+	config(
+		database='housing_market_dw'
+	)
+}}
 with
-    fact_table as (
+    source as (
         select
             $1:id::NUMBER(38, 0) as id,
             $1:period_begin::DATE as period_begin,
@@ -25,8 +29,8 @@ with
             $1:region_id::NUMBER(8, 0) as region_id,
             $1:region_type_id::NUMBER(2, 0) as region_type_id,
             $1:state_id::NUMBER(4, 0) as state_id
-        from '@housing_market_dw.public.s3_stage/processed_data.parquet'
+        from {{ source('external_stage', 's3_stage') }}
     )
 
 select *
-from fact_table
+from source

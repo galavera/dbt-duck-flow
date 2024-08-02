@@ -7,4 +7,10 @@ sources:
     tables:
       - name: raw_data
   - name: external_stage
-
+    database: housing_market_dw
+    schema: public
+    tables:
+      - name: s3_stage
+        external:
+          location: 's3://dataspec/stage/raw_data.parquet'
+          format: 'parquet'
